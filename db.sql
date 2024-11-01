@@ -11,14 +11,14 @@ CREATE TABLE users (
   user_username VARCHAR(255) NOT NULL,
   user_password VARCHAR(255) NOT NULL,
   user_additional_info TEXT,
-  hospital_id INT NOT NULL
+  hospital_id INT
 );
 
 CREATE TABLE hospital (
   hospital_id INT PRIMARY KEY AUTO_INCREMENT,
   hospital_name VARCHAR(255) NOT NULL,
   hospital_code VARCHAR(255) NOT NULL,
-  location_id INT NOT NULL
+  location_id INT
 );
 
 CREATE TABLE location (
@@ -38,7 +38,7 @@ CREATE TABLE patient (
   patient_gender VARCHAR(255) NOT NULL,
   patient_no_of_births VARCHAR(255) NOT NULL,
   patient_phone_no VARCHAR(255) NOT NULL,
-  hospital_id INT NOT NULL
+  hospital_id INT
 );
 
 CREATE TABLE biological_indicators (
@@ -50,7 +50,7 @@ CREATE TABLE biological_indicators (
   bio_indicators_blood_pressure VARCHAR(255) NOT NULL,
   bio_indicators_blood_sugar VARCHAR(255) NOT NULL,
   bio_indicators_health_status VARCHAR(255) NOT NULL,
-  patient_id INT NOT NULL
+  patient_id INT
 );
 
 ALTER TABLE users
