@@ -10,13 +10,3 @@ def Database():
         database = os.getenv("DB_NAME"),
     )
     return db
-
-# cursor.execute(f"""
-# """)
-# db.commit()
-
-# result = cursor.fetchall()
-# for row in result:
-#     print(row)
-
-# db.close()
