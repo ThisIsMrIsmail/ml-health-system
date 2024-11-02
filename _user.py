@@ -23,13 +23,28 @@ def Register(data, db):
     print("Request Data Recieved:", data)
     cursor = db.cursor()
     cursor.execute(f"""
-        INSERT INTO users (user_username, user_password)
-        VALUES ('{data["username"]}', '{data["password"]}')
+        SELECT * FROM users
+        WHERE user_username = '{data["username"]}'
+    """)
+    response = cursor.fetchall()
+    if len(response) >= 1:
+        db.close()
+        print("Response Data Sent:", {"message": "Username already exists", "auth": False})
+        return {"message": "Username already exists", "auth": False}, 400
+    cursor.execute(f"""
+        INSERT INTO users (
+            user_name, user_code, user_gender,
+            user_username, user_password,
+            user_additional_info, hospital_id)
+        VALUES (
+            '{data["user_name"]}', '{data["user_code"]}', '{data["user_gender"]}',
+            '{data["user_username"]}', '{data["user_password"]}',
+            '{data["user_additional_info"]}', '{data["hospital_id"]}')
     """)
     db.commit()
     db.close()
     print("Response Data Sent:", {"message": "User registered successfully"})
-    return {"message": "User registered successfully"}, 200
+    return {"message": "User registered successfully", "auth": True}, 200
 
 # ------------------------------------------------------
 
