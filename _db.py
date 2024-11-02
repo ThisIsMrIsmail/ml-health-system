@@ -1,7 +1,7 @@
 import os
 import mysql.connector
 
-def create_conn():
+def Database():
     db = mysql.connector.connect(
         host = os.getenv("DB_HOST"),
         user = os.getenv("DB_USER"),
