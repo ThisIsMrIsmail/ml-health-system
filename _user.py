@@ -70,7 +70,7 @@ def Login(data, db):
         return {"message": "Invalid credentials", "auth": False}, 401
     else:
         print("Response Data Sent:", {"message": "Login successful", "auth": True})
-        return {"message": "Login successful", "auth": True}, 200
+        return {"message": "Login successful", "user": response, "auth": True}, 200
 
 # ------------------------------------------------------
 
@@ -79,8 +79,7 @@ def Profile(data, db):
     cursor = db.cursor()
     cursor.execute(f"""
         SELECT * FROM users
-        WHERE user_username = '{data["username"]}'
-        AND user_password = '{data["password"]}'
+        WHERE user_username = '{data["user_username"]}'
     """)
     response = cursor.fetchall()
     db.close()
@@ -89,7 +88,7 @@ def Profile(data, db):
         return {"message": "Invalid credentials", "auth": False}, 401
     else:
         print("Response Data Sent:", {"message": "Profile fetched successfully", "auth": True})
-        return {"message": "Profile fetched successfully", "auth": True}, 200
+        return {"message": "Profile fetched successfully", "user": response, "auth": True}, 200
     
 # ------------------------------------------------------
 
@@ -98,10 +97,11 @@ def Update(data, db):
     cursor = db.cursor()
     cursor.execute(f"""
         UPDATE users
-        SET user_username = '{data["new_username"]}',
-        user_password = '{data["new_password"]}'
-        WHERE user_username = '{data["username"]}'
-        AND user_password = '{data["password"]}'
+        SET user_username = '{data["user_username"]}',
+            user_password = '{data["user_password"]}',
+            user_additional_info = '{data["user_additional_info"]}',
+            hospital_id = '{data["hospital_id"]}'
+        WHERE user_username = '{data["user_username"]}'
     """)
     db.commit()
     db.close()
@@ -115,8 +115,8 @@ def Delete(data, db):
     cursor = db.cursor()
     cursor.execute(f"""
         DELETE FROM users
-        WHERE user_username = '{data["username"]}'
-        AND user_password = '{data["password"]}'
+        WHERE user_username = '{data["user_username"]}'
+        AND user_password = '{data["user_password"]}'
     """)
     db.commit()
     db.close()
