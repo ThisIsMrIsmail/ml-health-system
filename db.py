@@ -12,19 +12,21 @@ db = mysql.connector.connect(
     database = os.getenv("DB_NAME"),
 )
 
-print(db)
-
-hos_name = "Seif  Hospital"
-hos_code = "SH127"
+user_name = "Ismail Sherif"
+user_code = "IS-0001"
+user_gender = "Male"
+user_username = "ismail"
+user_password = "helloworld"
+user_additional_info = "He is a senior cs student."
 
 cursor = db.cursor()
 cursor.execute(f"""
-    INSERT INTO hospital (hospital_name, hospital_code)
-    VALUES ("{hos_name}", "{hos_code}")
+    INSERT INTO users (user_name, user_code, user_gender, user_username, user_password, user_additional_info)
+    VALUES ("{user_name}", "{user_code}", "{user_gender}", "{user_username}", "{user_password}", "{user_additional_info}")
 """)
 db.commit()
 
-cursor.execute("SELECT * FROM hospital")
+cursor.execute("SELECT * FROM users")
 result = cursor.fetchall()
 for row in result:
     print(row)

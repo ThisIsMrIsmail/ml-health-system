@@ -7,14 +7,13 @@ app = flask.Flask(__name__)
 api = Api(app)
 CORS(app)
 
-class Regsitration(Resource):
+class Login(Resource):
     def post(self):
         print(flask.request.json)
         
         return {"data": "Registration data"}
 
-api.add_resource(Regsitration, "/api/login")
-api.add_resource(Regsitration, "/api/signup")
+api.add_resource(Login, "/api/login")
 
 if __name__ == "__main__":
     app.run(debug=True)
