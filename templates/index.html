@@ -20,9 +20,12 @@
                         'Accept': 'application/json'
                     },
                     body: JSON.stringify({
-                        user_name: 'testname',
-                        user_username: 'testuser',
-                        user_password: 'testpassword'
+                        user_name: 'NEW_NAME_testname',
+                        user_gender: 'Male',
+                        user_username: 'NEW_testuser',
+                        user_password: 'testpassword',
+                        user_additional_info: 'testinfo',
+                        hospital_id: 1,
                     })
                 }
             ).then(function(response) {

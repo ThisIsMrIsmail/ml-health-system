@@ -28,7 +28,7 @@ def Register(data, db):
     cursor = db.cursor()
     cursor.execute(f"""
         SELECT * FROM users
-        WHERE user_username = '{data["username"]}'
+        WHERE user_username = '{data["user_username"]}'
     """)
     response = cursor.fetchall()
     if len(response) >= 1:
@@ -60,8 +60,8 @@ def Login(data, db):
     cursor = db.cursor()
     cursor.execute(f"""
         SELECT * FROM users
-        WHERE user_username = '{data["username"]}'
-        AND user_password = '{data["password"]}'
+        WHERE user_username = '{data["user_username"]}'
+        AND user_password = '{data["user_password"]}'
     """)
     response = cursor.fetchall()
     db.close()
