@@ -1,9 +1,9 @@
 import flask
 from flask_restful import Api, Resource, reqparse
 from flask_cors import CORS
-import os
 from dotenv import load_dotenv
 import _db
+
 
 load_dotenv()
 app = flask.Flask(__name__)
@@ -18,15 +18,14 @@ class Login(Resource):
         cursor = db.cursor()
         cursor.execute(f"""
             SELECT * FROM users
-            WHERE user_username = "{data["username"]}" AND user_password = "{data["password"]}"
+            WHERE user_username = '{data["username"]}' AND user_password = '{data["password"]}'
         """)
+        response = cursor.fetchall()
         db.close()
-        result = cursor.fetchall()
-        print("Result:", result)
-        if len(result) == 0:
-            return {"data": "Invalid credentials"}
+        if len(response) == 0:
+            return {"message": "Invalid credentials", "auth": False}, 401
         else:
-            return {"data": "Login successful"}
+            return {"message": "Login successful", "auth": True}, 200
 
 api.add_resource(Login, "/api/login")
 
