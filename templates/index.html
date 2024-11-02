@@ -12,16 +12,17 @@
     <script>
         function Login() {
             fetch (
-                'http://127.0.0.1:5000/api/user/login',
+                'http://127.0.0.1:5000/api/user/register',
                 {
-                    method: 'DELETE',
+                    method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                         'Accept': 'application/json'
                     },
                     body: JSON.stringify({
-                        username: 'ismail',
-                        password: 'helloworld'
+                        user_name: 'testname',
+                        user_username: 'testuser',
+                        user_password: 'testpassword'
                     })
                 }
             ).then(function(response) {

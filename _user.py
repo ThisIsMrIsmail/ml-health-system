@@ -1,3 +1,7 @@
+
+import random
+import string
+
 # ------------------------------------------------------
 # _user.py,used in app.py, contains the functions for the user endpoints.
 #
@@ -31,6 +35,9 @@ def Register(data, db):
         db.close()
         print("Response Data Sent:", {"message": "Username already exists", "auth": False})
         return {"message": "Username already exists", "auth": False}, 400
+    # User Code ex: IS-7482
+    code = ''.join(random.choice(string.digits) for i in range(4))
+    data["user_code"] = f"{data['user_name'][:2].upper()}-{code}"
     cursor.execute(f"""
         INSERT INTO users (
             user_name, user_code, user_gender,
