@@ -12,7 +12,7 @@
     <script>
         function Login() {
             fetch (
-                'http://127.0.0.1:5000/api/user/register',
+                'http://127.0.0.1:5000/api/user/update',
                 {
                     method: 'POST',
                     headers: {
@@ -20,12 +20,10 @@
                         'Accept': 'application/json'
                     },
                     body: JSON.stringify({
-                        user_name: 'NEW_NAME_testname',
-                        user_gender: 'Male',
-                        user_username: 'NEW_testuser',
-                        user_password: 'testpassword',
-                        user_additional_info: 'testinfo',
-                        hospital_id: 1,
+                        user_username: 'update_mr_testuser',
+                        user_password: 'update_mr_testpassword',
+                        user_additional_info: 'update_mr_testinfo',
+                        hospital_id: 3,
                     })
                 }
             ).then(function(response) {

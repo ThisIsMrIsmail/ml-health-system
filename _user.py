@@ -97,10 +97,10 @@ def Update(data, db):
     cursor = db.cursor()
     cursor.execute(f"""
         UPDATE users
-        SET user_username = '{data["user_username"]}',
-            user_password = '{data["user_password"]}',
-            user_additional_info = '{data["user_additional_info"]}',
-            hospital_id = '{data["hospital_id"]}'
+        SET user_username = '{data["new_user_username"]}',
+            user_password = '{data["new_user_password"]}',
+            user_additional_info = '{data["new_user_additional_info"]}',
+            hospital_id = '{data["new_hospital_id"]}'
         WHERE user_username = '{data["user_username"]}'
     """)
     db.commit()
@@ -116,7 +116,6 @@ def Delete(data, db):
     cursor.execute(f"""
         DELETE FROM users
         WHERE user_username = '{data["user_username"]}'
-        AND user_password = '{data["user_password"]}'
     """)
     db.commit()
     db.close()
