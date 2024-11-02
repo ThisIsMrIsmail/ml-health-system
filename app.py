@@ -4,6 +4,7 @@ from flask_cors import CORS
 from dotenv import load_dotenv
 
 import _db
+import _user
 
 load_dotenv()
 app = flask.Flask(__name__)
@@ -28,6 +29,51 @@ class User():
                 return {"message": "Invalid credentials", "auth": False}, 401
             else:
                 return {"message": "Login successful", "auth": True}, 200
+        def delete(self):
+            data = flask.request.json
+            print("Request Data Recieved:", data)
+            db = _db.Database()
+            cursor = db.cursor()
+            cursor.execute(f"""
+                DELETE FROM users
+                WHERE user_username = '{data["username"]}'
+                AND user_password = '{data["password"]}'
+            """)
+            db.commit()
+            db.close()
+            return {"message": "User deleted successfully"}, 200
+            
+    class Register(Resource):
+        def post(self):
+            data = flask.request.json
+            print("Request Data Recieved:", data)
+            db = _db.Database()
+            cursor = db.cursor()
+            cursor.execute(f"""
+                INSERT INTO users (user_username, user_password)
+                VALUES ('{data["username"]}', '{data["password"]}')
+            """)
+            db.commit()
+            db.close()
+            return {"message": "User registered successfully"}, 200
+    
+    class Profile(Resource):
+        def post(self):
+            data = flask.request.json
+            print("Request Data Recieved:", data)
+            db = _db.Database()
+            cursor = db.cursor()
+            cursor.execute(f"""
+                SELECT * FROM users
+                WHERE user_username = '{data["username"]}'
+                AND user_password = '{data["password"]}'
+            """)
+            response = cursor.fetchall()
+            db.close()
+            if len(response) == 0:
+                return {"message": "Invalid credentials", "auth": False}, 401
+            else:
+                return {"message": "Profile fetched successfully", "auth": True}, 200
             
     class Update(Resource):
         def post(self):
