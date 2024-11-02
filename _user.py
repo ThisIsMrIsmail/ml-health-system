@@ -2,8 +2,8 @@
 # _user.py,used in app.py, contains the functions for the user endpoints.
 #
 # The functions are:
-#   - Login(data, db)
 #   - Register(data, db)
+#   - Login(data, db)
 #   - Profile(data, db)
 #   - Update(data, db)
 #   - Delete(data, db)
@@ -17,6 +17,20 @@
 #   - an integer representing the status code
 #
 # The functions are used in app.py to handle the user endpoints.
+# ------------------------------------------------------
+
+def Register(data, db):
+    print("Request Data Recieved:", data)
+    cursor = db.cursor()
+    cursor.execute(f"""
+        INSERT INTO users (user_username, user_password)
+        VALUES ('{data["username"]}', '{data["password"]}')
+    """)
+    db.commit()
+    db.close()
+    print("Response Data Sent:", {"message": "User registered successfully"})
+    return {"message": "User registered successfully"}, 200
+
 # ------------------------------------------------------
 
 def Login(data, db):
@@ -35,20 +49,6 @@ def Login(data, db):
     else:
         print("Response Data Sent:", {"message": "Login successful", "auth": True})
         return {"message": "Login successful", "auth": True}, 200
-
-# ------------------------------------------------------
-
-def Register(data, db):
-    print("Request Data Recieved:", data)
-    cursor = db.cursor()
-    cursor.execute(f"""
-        INSERT INTO users (user_username, user_password)
-        VALUES ('{data["username"]}', '{data["password"]}')
-    """)
-    db.commit()
-    db.close()
-    print("Response Data Sent:", {"message": "User registered successfully"})
-    return {"message": "User registered successfully"}, 200
 
 # ------------------------------------------------------
 
