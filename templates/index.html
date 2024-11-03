@@ -11,8 +11,10 @@
     
     <script>
         function Login() {
+            var api_url = 'https://ml-health-system-api.vercel.app';
+            var api_url = 'http://127.0.0.1:5000';
             fetch (
-                'https://ml-health-system-api.vercel.app/api/user/delete',
+                `${api_url}/api/db/query`,
                 {
                     method: 'POST',
                     headers: {
@@ -20,7 +22,7 @@
                         'Accept': 'application/json'
                     },
                     body: JSON.stringify({
-                        user_username: 'NEW MR BOss THE NEW update_mr_testuser'
+                        query: 'SELECT * FROM users'
                     })
                 }
             ).then(function(response) {

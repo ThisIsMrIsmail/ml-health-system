@@ -1,6 +1,6 @@
 import os
 import sqlite3
-from db_main import main_query
+from Trash.create_db import main_query
 
 if "database.db" in os.listdir():
     os.remove("database.db")

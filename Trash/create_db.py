@@ -1,4 +1,4 @@
-main_query ="""
+query ="""
 CREATE TABLE IF NOT EXISTS locations (
   location_id INTEGER PRIMARY KEY AUTOINCREMENT,
   location_address TEXT NOT NULL,
