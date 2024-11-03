@@ -13,14 +13,8 @@ db = mysql.connector.connect(
 )
 
 cursor = db.cursor()
-cursor.execute(f"""
-    INSERT INTO hopistals (hospital_name, hospital_code, user_username, user_password)
-    VALUES ("Ismail Sherif", "IS-7482", "ismail", "hello")
-""")
-print(cursor.fetchall())
+cursor.execute()
 db.commit()
-# result = cursor.fetchall()
-# for row in result:
-#     print(row)
+print(cursor.fetchall())
 
 db.close()
