@@ -1,65 +1,57 @@
-CREATE TABLE users (
-  user_id INT PRIMARY KEY AUTO_INCREMENT,
-  user_name VARCHAR(255) NOT NULL,
-  user_code VARCHAR(255) NOT NULL,
-  user_gender VARCHAR(255),
-  user_username VARCHAR(255) NOT NULL,
-  user_password VARCHAR(255) NOT NULL,
-  user_additional_info TEXT,
-  hospital_id INT
-);
-
-CREATE TABLE hospitals (
-  hospital_id INT PRIMARY KEY AUTO_INCREMENT,
-  hospital_name VARCHAR(255) NOT NULL,
-  hospital_code VARCHAR(255) NOT NULL,
-  location_id INT
-);
-
-CREATE TABLE locations (
-  location_id INT PRIMARY KEY AUTO_INCREMENT,
+main_query ="""
+CREATE TABLE IF NOT EXISTS locations (
+  location_id INTEGER PRIMARY KEY AUTOINCREMENT,
   location_address TEXT NOT NULL,
-  location_governorate VARCHAR(255) NOT NULL,
-  location_nation VARCHAR(255) NOT NULL
+  location_governorate TEXT NOT NULL,
+  location_nation TEXT NOT NULL
 );
 
-CREATE TABLE patients (
-  patient_id INT PRIMARY KEY AUTO_INCREMENT,
-  patient_name VARCHAR(255) NOT NULL,
-  patient_pregnancy_status VARCHAR(255) NOT NULL,
+CREATE TABLE IF NOT EXISTS hospitals (
+  hospital_id INTEGER PRIMARY KEY AUTOINCREMENT,
+  hospital_name TEXT NOT NULL,
+  hospital_code TEXT NOT NULL,
+  location_id INTEGER,
+  FOREIGN KEY (location_id) REFERENCES locations (location_id)
+);
+
+CREATE TABLE IF NOT EXISTS users (
+  user_id INTEGER PRIMARY KEY AUTOINCREMENT,
+  user_name TEXT NOT NULL,
+  user_code TEXT NOT NULL,
+  user_gender TEXT,
+  user_username TEXT NOT NULL,
+  user_password TEXT NOT NULL,
+  user_additional_info TEXT,
+  hospital_id INTEGER,
+  FOREIGN KEY (hospital_id) REFERENCES hospitals (hospital_id)
+);
+
+CREATE TABLE IF NOT EXISTS patients (
+  patient_id INTEGER PRIMARY KEY AUTOINCREMENT,
+  patient_name TEXT NOT NULL,
+  patient_pregnancy_status TEXT NOT NULL,
   patient_address TEXT NOT NULL,
-  patient_code VARCHAR(255) NOT NULL,
-  patient_age VARCHAR(255) NOT NULL,
-  patient_gender VARCHAR(255) NOT NULL,
-  patient_no_of_births VARCHAR(255) NOT NULL,
-  patient_phone_no VARCHAR(255) NOT NULL,
-  hospital_id INT
+  patient_code TEXT NOT NULL,
+  patient_age TEXT NOT NULL,
+  patient_gender TEXT NOT NULL,
+  patient_no_of_births TEXT NOT NULL,
+  patient_phone_no TEXT NOT NULL,
+  hospital_id INTEGER,
+  FOREIGN KEY (hospital_id) REFERENCES hospitals (hospital_id)
 );
 
-CREATE TABLE biological_indicators (
-  bio_indicators_id INT PRIMARY KEY AUTO_INCREMENT,
-  bio_indicators_patient_code VARCHAR(255) NOT NULL,
+CREATE TABLE IF NOT EXISTS biological_indicators (
+  bio_indicators_id INTEGER PRIMARY KEY AUTOINCREMENT,
+  bio_indicators_patient_code TEXT NOT NULL,
   bio_indicators_date TEXT NOT NULL,
-  bio_indicators_time VARCHAR(255) NOT NULL,
-  bio_indicators_average_temperature VARCHAR(255) NOT NULL,
-  bio_indicators_blood_pressure VARCHAR(255) NOT NULL,
-  bio_indicators_blood_sugar VARCHAR(255) NOT NULL,
-  bio_indicators_health_status VARCHAR(255) NOT NULL,
-  patient_id INT
+  bio_indicators_time TEXT NOT NULL,
+  bio_indicators_average_temperature TEXT NOT NULL,
+  bio_indicators_blood_pressure TEXT NOT NULL,
+  bio_indicators_blood_sugar TEXT NOT NULL,
+  bio_indicators_health_status TEXT NOT NULL,
+  patient_id INTEGER,
+  FOREIGN KEY (patient_id) REFERENCES patients (patient_id)
 );
-
-ALTER TABLE users
-  ADD FOREIGN KEY (hospital_id) REFERENCES hospital (hospital_id);
-
-ALTER TABLE patient
-  ADD FOREIGN KEY (hospital_id) REFERENCES hospital (hospital_id);
-  
-ALTER TABLE hospital
-  ADD FOREIGN KEY (location_id) REFERENCES location (location_id);
-
-ALTER TABLE biological_indicators
-  ADD FOREIGN KEY (patient_id) REFERENCES patient (patient_id);
-
 
 -- Insert data into location table
 INSERT INTO locations (location_address, location_governorate, location_nation)
@@ -160,3 +152,4 @@ VALUES
   ('PT003', '2024-10-08', '3:30 PM', '36.6', '113/72', '91', 'Stable', 3),
   ('PT003', '2024-10-09', '4:15 PM', '37.0', '116/78', '98', 'Stable', 3),
   ('PT003', '2024-10-10', '5:00 PM', '36.7', '114/75', '96', 'Stable', 3);
+"""
