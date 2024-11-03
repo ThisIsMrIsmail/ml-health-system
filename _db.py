@@ -1,5 +1,6 @@
 import os
 import sqlite3
+from sqlite3 import Error
 from Trash.create_db import query
 
 def Database():
